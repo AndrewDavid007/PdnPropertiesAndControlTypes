@@ -122,7 +122,7 @@ namespace PropertyBasedEffects
         /// <summary>
         /// Defines an abstract name for the effect class
         /// </summary>
-        private static Type ClassType = typeof(PdnPropertiesAndControlTypes);
+        private readonly Type ClassType = typeof(PdnPropertiesAndControlTypes);
 
         // ----------------------------------------------------------------------
         /// <summary>
@@ -160,9 +160,9 @@ namespace PropertyBasedEffects
         /// Constructs an ExamplePropertyBasedEffect instance
         /// </summary>
         public PdnPropertiesAndControlTypes()
-#pragma warning disable CA1416 // Validate platform compatibility
+
             : base(StaticName, StaticImage, StaticSubmenuName, new EffectOptions() { Flags = EffectFlags.Configurable })
-#pragma warning restore CA1416 // Validate platform compatibility
+
         {
         }
 
@@ -177,8 +177,6 @@ namespace PropertyBasedEffects
         }
 
         // ----------------------------------------------------------------------
-
-
         /// <summary>
         /// Identifiers of the properties used by the effect
         /// </summary>
@@ -220,138 +218,69 @@ namespace PropertyBasedEffects
         protected override PropertyCollection OnCreatePropertyCollection()
         {
             // Add properties of all types and control types (always the variant with minimal parameters)
-#pragma warning disable CA1416 // Validate platform compatibility
-            List<Property> props = new List<Property>
+
+            List<Property> props = new()
             {
-#pragma warning disable CA1416 // Validate platform compatibility
                 new BooleanProperty(PropertyNames.BooleanProperty),     // Default: PropertyControlType.CheckBox
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new DoubleProperty(PropertyNames.DoubleProperty),       // Default: PropertyControlType.Slider
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new DoubleProperty(PropertyNames.DoubleProperty_AngleChooser, 45, 0, 360),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new DoubleVectorProperty(PropertyNames.DoubleVectorProperty_Slider,
                     Pair.Create(0.0, 0.0),
                     Pair.Create(-1.0, -1.0),
                     Pair.Create(1.0, 1.0)),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
                 new DoubleVectorProperty(PropertyNames.DoubleVectorProperty,   // Default: PropertyControlType.PanAndSlider
-#pragma warning disable CA1416 // Validate platform compatibility
                     Pair.Create(0.0, 0.0),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                     Pair.Create(-1.0, -1.0),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                     Pair.Create(1.0, 1.0)),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new DoubleVector3Property(PropertyNames.DoubleVector3Property, // Default: PropertyControlType.Slider
                     Tuple.Create<double,double,double>(0, 0, 0),
                     Tuple.Create<double,double,double>(-1, -1, -1),
                     Tuple.Create<double,double,double>(1, 1, 1)),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new DoubleVector3Property(PropertyNames.DoubleVector3Property_RollBallAndSliders,
                     Tuple.Create<double,double,double>(0, 0, 0),
                     Tuple.Create<double,double,double>(-180, -180, 0),
                     Tuple.Create<double,double,double>(180, 180, 90)),
-#pragma warning restore CA1416 // Validate platform compatibility
                 //ImageProperty (not implemented)
-#pragma warning disable CA1416 // Validate platform compatibility
                 new Int32Property(PropertyNames.Int32Property),         // Default: PropertyControlType.Slider
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new Int32Property(PropertyNames.Int32Property_ColorWheel),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new Int32Property(PropertyNames.Int32Property_IncrementButton),
-#pragma warning restore CA1416 // Validate platform compatibility
                 //ScalarProperty (abstract)
-#pragma warning disable CA1416 // Validate platform compatibility
                 StaticListChoiceProperty.CreateForEnum<ListItemsType>(   // Default: PropertyControlType.DropDown
                     PropertyNames.StaticListChoiceProperty, ListItemsType.ListItem1, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 StaticListChoiceProperty.CreateForEnum<ListItemsType>(
                     PropertyNames.StaticListChoiceProperty_RadioButton, ListItemsType.ListItem1, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new StringProperty(PropertyNames.StringProperty),       // Default: PropertyControlType.TextBox
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new StringProperty(PropertyNames.StringProperty_FileChooser),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new UriProperty(PropertyNames.UriProperty, new Uri("https://forums.getpaint.net")),                    // is PropertyControlType.TextBox
-#pragma warning restore CA1416 // Validate platform compatibility
                 //VectorProperty (abstract)
                 //Vector3Property (abstract)
             };
-#pragma warning restore CA1416 // Validate platform compatibility
-
             // Add rules (this list may be empty or null)
-#pragma warning disable CA1416 // Validate platform compatibility
-            List<PropertyCollectionRule> propRules = new List<PropertyCollectionRule>()
+            List<PropertyCollectionRule> propRules = new()
             {
                 // Let the readonly state of the properties depend on the checkbox property
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.DoubleProperty, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.DoubleProperty_AngleChooser, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.DoubleVectorProperty, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.DoubleVectorProperty_Slider, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.DoubleVector3Property, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.DoubleVector3Property_RollBallAndSliders, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.Int32Property, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.Int32Property_ColorWheel, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.Int32Property_IncrementButton, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.StaticListChoiceProperty, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.StaticListChoiceProperty_RadioButton, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.StringProperty, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.StringProperty_FileChooser, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 new ReadOnlyBoundToBooleanRule(PropertyNames.UriProperty, PropertyNames.BooleanProperty, false),
-#pragma warning restore CA1416 // Validate platform compatibility
 
                 // Available rules:
                 // LinkValuesBasedOnBooleanRule, PropertyCollectionRule, SoftMutuallyBoundMinMaxRule
                 // ReadOnlyBoundToBooleanRule, ReadOnlyBoundToNameValuesRule, ReadOnlyBoundToValueRule
             };
-#pragma warning restore CA1416 // Validate platform compatibility
-
-#pragma warning disable CA1416 // Validate platform compatibility
             return new PropertyCollection(props, propRules);
-#pragma warning restore CA1416 // Validate platform compatibility
+
         } /* OnCreatePropertyCollection */
 
         // ----------------------------------------------------------------------
@@ -367,154 +296,79 @@ namespace PropertyBasedEffects
         /// </summary>
         protected override ControlInfo OnCreateConfigUI(PropertyCollection props)
         {
-#pragma warning disable CA1416 // Validate platform compatibility
             ControlInfo configUI = CreateDefaultConfigUI(props);
-#pragma warning restore CA1416 // Validate platform compatibility
-
+  
             //// Set control types
             // BooleanProperty (Default: PropertyControlType.CheckBox)
             // DoubleProperty (Default: PropertyControlType.Slider)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.DoubleProperty_AngleChooser, PropertyControlType.AngleChooser);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
+  
             // DoubleVectorProperty (Default: PropertyControlType.PanAndSlider)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.DoubleVectorProperty_Slider, PropertyControlType.Slider);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
+ 
             // DoubleVector3Property (Default: PropertyControlType.Slider)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.DoubleVector3Property_RollBallAndSliders, PropertyControlType.RollBallAndSliders);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
+  
             // Int32Property (Default: PropertyControlType.Slider)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.Int32Property_ColorWheel, PropertyControlType.ColorWheel);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.Int32Property_IncrementButton, PropertyControlType.IncrementButton);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
+ 
             // StaticListChoiceProperty (Default: PropertyControlType.DropDown)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.StaticListChoiceProperty_RadioButton, PropertyControlType.RadioButton);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
+ 
             // StringProperty (Default: PropertyControlType.TextBox)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             configUI.SetPropertyControlType(PropertyNames.StringProperty_FileChooser, PropertyControlType.FileChooser);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
+
             // UriProperty (Default: PropertyControlType.LinkLabel)
-
-
             //// Set control texts
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.BooleanProperty, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "BooleanProperty  (Default: CheckBox)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.BooleanProperty, ControlInfoPropertyNames.Description,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "Set all following properties to ReadOnly");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.DoubleProperty, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "DoubleProperty  (Default: Slider)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.DoubleProperty_AngleChooser, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "DoubleProperty  (AngleChooser)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.DoubleVectorProperty, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "DoubleVectorProperty  (Default: PanAndSlider)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.DoubleVectorProperty_Slider, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "DoubleVectorProperty  (Slider)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.DoubleVector3Property, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "DoubleVector3Property  (Default: Slider)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.DoubleVector3Property_RollBallAndSliders, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "DoubleVector3Property  (RollBallAndSliders)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.Int32Property, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "Int32Property  (Default: Slider)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.Int32Property_ColorWheel, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "Int32Property  (ColorWheel)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.Int32Property_IncrementButton, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "Int32Property  (IncrementButton)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.StaticListChoiceProperty, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "StaticListChoiceProperty  (Default: DropDown)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.StaticListChoiceProperty_RadioButton, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "StaticListChoiceProperty  (RadioButton)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.StringProperty, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "StringProperty  (Default: TextBox)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.StringProperty_FileChooser, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "StringProperty  (FileChooser)");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            configUI.SetPropertyControlValue(PropertyNames.UriProperty, ControlInfoPropertyNames.DisplayName,
-#pragma warning restore CA1416 // Validate platform compatibility
-                "UriProperty  (Default: LinkLabel)");
-#pragma warning restore CA1416 // Validate platform compatibility
 
+            configUI.SetPropertyControlValue(PropertyNames.BooleanProperty, ControlInfoPropertyNames.DisplayName,
+                "BooleanProperty  (Default: CheckBox)");
+
+            configUI.SetPropertyControlValue(PropertyNames.BooleanProperty, ControlInfoPropertyNames.Description,
+                "Set all following properties to ReadOnly");
+
+            configUI.SetPropertyControlValue(PropertyNames.DoubleProperty, ControlInfoPropertyNames.DisplayName,
+                "DoubleProperty  (Default: Slider)");
+
+            configUI.SetPropertyControlValue(PropertyNames.DoubleProperty_AngleChooser, ControlInfoPropertyNames.DisplayName,
+                "DoubleProperty  (AngleChooser)");
+
+            configUI.SetPropertyControlValue(PropertyNames.DoubleVectorProperty, ControlInfoPropertyNames.DisplayName,
+                "DoubleVectorProperty  (Default: PanAndSlider)");
+
+            configUI.SetPropertyControlValue(PropertyNames.DoubleVectorProperty_Slider, ControlInfoPropertyNames.DisplayName,
+                "DoubleVectorProperty  (Slider)");
+
+            configUI.SetPropertyControlValue(PropertyNames.DoubleVector3Property, ControlInfoPropertyNames.DisplayName,
+                "DoubleVector3Property  (Default: Slider)");
+
+            configUI.SetPropertyControlValue(PropertyNames.DoubleVector3Property_RollBallAndSliders, ControlInfoPropertyNames.DisplayName,
+                "DoubleVector3Property  (RollBallAndSliders)");
+
+            configUI.SetPropertyControlValue(PropertyNames.Int32Property, ControlInfoPropertyNames.DisplayName,
+                "Int32Property  (Default: Slider)");
+
+            configUI.SetPropertyControlValue(PropertyNames.Int32Property_ColorWheel, ControlInfoPropertyNames.DisplayName,
+                "Int32Property  (ColorWheel)");
+
+            configUI.SetPropertyControlValue(PropertyNames.Int32Property_IncrementButton, ControlInfoPropertyNames.DisplayName,
+                "Int32Property  (IncrementButton)");
+
+            configUI.SetPropertyControlValue(PropertyNames.StaticListChoiceProperty, ControlInfoPropertyNames.DisplayName,
+                "StaticListChoiceProperty  (Default: DropDown)");
+ 
+            configUI.SetPropertyControlValue(PropertyNames.StaticListChoiceProperty_RadioButton, ControlInfoPropertyNames.DisplayName,
+                "StaticListChoiceProperty  (RadioButton)");
+ 
+            configUI.SetPropertyControlValue(PropertyNames.StringProperty, ControlInfoPropertyNames.DisplayName,
+                "StringProperty  (Default: TextBox)");
+
+            configUI.SetPropertyControlValue(PropertyNames.StringProperty_FileChooser, ControlInfoPropertyNames.DisplayName,
+                "StringProperty  (FileChooser)");
+
+            configUI.SetPropertyControlValue(PropertyNames.UriProperty, ControlInfoPropertyNames.DisplayName,
+                "UriProperty  (Default: LinkLabel)");
 
             /*
  
@@ -543,33 +397,15 @@ namespace PropertyBasedEffects
         /// </summary>
         protected override void OnCustomizeConfigUIWindowProperties(PropertyCollection props)
         {
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            props[ControlInfoPropertyNames.WindowTitle].Value = "Properties and ControlTypes (PDN 4.300)";
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            props[ControlInfoPropertyNames.WindowIsSizable].Value = true;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-            props[ControlInfoPropertyNames.WindowHelpContentType].Value = WindowHelpContentType.CustomViaCallback;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
 
-#pragma warning disable CA1416 // Validate platform compatibility
+            props[ControlInfoPropertyNames.WindowTitle].Value = "Properties and ControlTypes (PDN 4.300)";
+
+            props[ControlInfoPropertyNames.WindowIsSizable].Value = true;
+
+            props[ControlInfoPropertyNames.WindowHelpContentType].Value = WindowHelpContentType.CustomViaCallback;
+
+
             base.OnCustomizeConfigUIWindowProperties(props);
-#pragma warning restore CA1416 // Validate platform compatibility
         } /* OnCustomizeConfigUIWindowProperties */
 
         private void OnWindowHelpButtonClicked(IWin32Window owner, string helpContent)
@@ -614,108 +450,53 @@ namespace PropertyBasedEffects
             envSelCenterY = envSelBounds.Top + envSelBounds.Height / 2;
             */
             System.Diagnostics.Trace.WriteLine("=== Property Values ===");
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propBooleanProperty = effectToken.GetProperty<BooleanProperty>(PropertyNames.BooleanProperty).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("BooleanProperty (CheckBox) Boolean=" + propBooleanProperty);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propDoubleProperty = effectToken.GetProperty<DoubleProperty>(PropertyNames.DoubleProperty).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("DoubleProperty (Slider) Double=" + propDoubleProperty);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propDoubleProperty_AngleChooser = effectToken.GetProperty<DoubleProperty>(PropertyNames.DoubleProperty_AngleChooser).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("DoubleProperty (AngleChooser) Double=" + propDoubleProperty_AngleChooser);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propDoubleVectorProperty_Slider = effectToken.GetProperty<DoubleVectorProperty>(PropertyNames.DoubleVectorProperty_Slider).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("DoubleVectorProperty (Slider) Pair<Double,Double>=(" + propDoubleVectorProperty_Slider.First + ", " + propDoubleVectorProperty_Slider.Second + ")");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propDoubleVectorProperty = effectToken.GetProperty<DoubleVectorProperty>(PropertyNames.DoubleVectorProperty).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("DoubleVectorProperty (PanAndSlider) Pair<Double,Double>=(" + propDoubleVectorProperty.First + ", " + propDoubleVectorProperty.Second + ")");
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propDoubleVector3Property = effectToken.GetProperty<DoubleVector3Property>(PropertyNames.DoubleVector3Property).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("DoubleVector3Property (Slider) Tuple<Double,Double,Double>=" + propDoubleVector3Property);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propDoubleVector3Property_RollBallAndSliders = effectToken.GetProperty<DoubleVector3Property>(PropertyNames.DoubleVector3Property_RollBallAndSliders).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("DoubleVector3Property (RollBallAndSliders) Tuple<Double,Double,Double>=" + propDoubleVector3Property_RollBallAndSliders);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propInt32Property = effectToken.GetProperty<Int32Property>(PropertyNames.Int32Property).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("Int32Property (Slider) Int32=" + propInt32Property);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propInt32Property_ColorWheel = effectToken.GetProperty<Int32Property>(PropertyNames.Int32Property_ColorWheel).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("Int32Property (ColorWheel) Int32=" + propInt32Property_ColorWheel);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propInt32Property_IncrementButton = effectToken.GetProperty<Int32Property>(PropertyNames.Int32Property_IncrementButton).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("Int32Property (IncrementButton) Int32=" + propInt32Property_IncrementButton);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propStaticListChoiceProperty = (ListItemsType)effectToken.GetProperty<StaticListChoiceProperty>(PropertyNames.StaticListChoiceProperty).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("StaticListChoiceProperty (DropDown) Enum=" + propStaticListChoiceProperty);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propStaticListChoiceProperty_RadioButton = (ListItemsType)effectToken.GetProperty<StaticListChoiceProperty>(PropertyNames.StaticListChoiceProperty_RadioButton).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("StaticListChoiceProperty (RadioButton) Enum=" + propStaticListChoiceProperty_RadioButton);
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propStringProperty = effectToken.GetProperty<StringProperty>(PropertyNames.StringProperty).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("StringProperty (TextBox) String='" + propStringProperty + "'");
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propStringProperty_FileChooser = effectToken.GetProperty<StringProperty>(PropertyNames.StringProperty_FileChooser).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("StringProperty (FileChooser) String='" + propStringProperty_FileChooser + "'");
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
+
             var propUriProperty = effectToken.GetProperty<UriProperty>(PropertyNames.UriProperty).Value;
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             System.Diagnostics.Trace.WriteLine("UriProperty (LinkLabel) Uri='" + propUriProperty + "'");
 
-#pragma warning disable CA1416 // Validate platform compatibility
             base.OnSetRenderInfo(effectToken, dstArgs, srcArgs);
-#pragma warning restore CA1416 // Validate platform compatibility
         } /* OnSetRenderInfo */
 
         // ----------------------------------------------------------------------
@@ -728,15 +509,7 @@ namespace PropertyBasedEffects
         {
             for (int i = startIndex; i < startIndex + length; ++i)
             {
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
                 RenderRectangle(DstArgs.Surface, SrcArgs.Surface, rois[i]);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
             }
         }
 
@@ -754,11 +527,7 @@ namespace PropertyBasedEffects
             //dst.CopySurface(src,renderRect.Location,renderRect);
 
             // Fill the selection of the active layer with transparent white (0x00FFFFFF)
-#pragma warning disable CA1416 // Validate platform compatibility
-#pragma warning disable CA1416 // Validate platform compatibility
             dst.Fill(renderRect, ColorBgra.Transparent);
-#pragma warning restore CA1416 // Validate platform compatibility
-#pragma warning restore CA1416 // Validate platform compatibility
 
         }
 
